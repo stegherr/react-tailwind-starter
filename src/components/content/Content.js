@@ -4,7 +4,6 @@ import { useEffect } from "react";
 
 const Content = (props) => {
   const isSidebarExpanded = useSelector((state) => state.ui.isSidebarExpanded);
-  const alert = useAlert();
 
   // useEffect(() => {
   //   alert.error("congrats");

@@ -1,18 +1,18 @@
 import { useForm } from "react-hook-form";
 import Button from "@mui/material/Button";
 import { Link, useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../../store/auth-slice";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
-
+import { login } from "../../../api-service/auth-service";
+import { useAlert } from "react-alert";
+import { useState, useEffect } from "react";
 const Login = () => {
   const disPatch = useDispatch();
+  const alert = useAlert();
 
   const isUserLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-
+  const [errorMessage, setErrorMessage] = useState("");
   useEffect(() => {
-    // alert.error('Oh look, an alert!')
     if (isUserLoggedIn) {
       history.replace("/");
     }
@@ -24,10 +24,20 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+    setErrorMessage("");
     console.log(data);
-    disPatch(authActions.login());
-    history.replace("/");
+    try {
+      const res = await login(data);
+      console.log(res);
+    } catch (err) {
+      console.error(err);
+      alert.error(err.message);
+      setErrorMessage(err.message);
+    }
+    // disPatch(authActions.login());
+
+    // history.replace("/");
   };
 
   return (
@@ -86,6 +96,11 @@ const Login = () => {
                 <p className="text-red-500 text-sm font-[500]">
                   Please check the Password
                 </p>
+              )}
+            </div>
+            <div className="text-center">
+              {errorMessage && (
+                <p className="text-red-500 text-sm font-bold">{errorMessage}</p>
               )}
             </div>
             <div className="ml-auto mr-auto pt-2">
