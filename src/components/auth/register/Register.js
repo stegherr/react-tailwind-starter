@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import Button from "@mui/material/Button";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -213,10 +214,18 @@ const Register = () => {
                 </p>
               )}
             </div>
-            <div className="ml-auto mr-auto ">
+            <div className="ml-auto mr-auto pt-2 ">
               <Button variant="outlined" type="submit">
                 Submit
               </Button>
+            </div>
+            <div className="ml-auto mr-auto py-2">
+              <p className="text-sm font-semibold">
+                Have an account already?{" "}
+                <Link to="/login" className="text-blue-500">
+                  Login here.
+                </Link>
+              </p>
             </div>
           </form>
         </div>
