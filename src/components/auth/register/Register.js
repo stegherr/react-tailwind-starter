@@ -1,13 +1,23 @@
 import { useForm } from "react-hook-form";
 import Button from "@mui/material/Button";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Register = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(false);
   const [isShowPasswordsMismatchError, setIsShowPasswordsMismatchError] =
     useState(false);
+  const history = useHistory();
+  const isUserLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
+  useEffect(() => {
+    if (isUserLoggedIn) {
+      history.replace("/");
+    }
+  }, []);
+
   const {
     register,
     handleSubmit,
@@ -21,6 +31,7 @@ const Register = () => {
       setIsShowPasswordsMismatchError(false);
     }
     console.log(data);
+    history.replace("/");
   };
 
   const showHidePasswordHandler = () => {

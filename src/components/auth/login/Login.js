@@ -1,7 +1,22 @@
 import { useForm } from "react-hook-form";
 import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../../store/auth-slice";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+
 const Login = () => {
+  const disPatch = useDispatch();
+  const isUserLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
+  useEffect(() => {
+    if (isUserLoggedIn) {
+      history.replace("/");
+    }
+  }, []);
+
+  const history = useHistory();
   const {
     register,
     handleSubmit,
@@ -9,6 +24,8 @@ const Login = () => {
   } = useForm();
   const onSubmit = (data) => {
     console.log(data);
+    disPatch(authActions.login());
+    history.replace("/");
   };
 
   return (
@@ -76,7 +93,10 @@ const Login = () => {
             </div>
             <div className="ml-auto mr-auto py-2">
               <p className="text-sm font-semibold">
-                Don't have an account <Link to="/register" className="text-blue-500">Register here.</Link>
+                Don't have an account{" "}
+                <Link to="/register" className="text-blue-500">
+                  Register here.
+                </Link>
               </p>
             </div>
           </form>
