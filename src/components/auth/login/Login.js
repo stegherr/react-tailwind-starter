@@ -5,12 +5,16 @@ import { useDispatch } from "react-redux";
 import { authActions } from "../../../store/auth-slice";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import { useAlert } from 'react-alert'
 
 const Login = () => {
   const disPatch = useDispatch();
+  const alert = useAlert()
+
   const isUserLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   useEffect(() => {
+    // alert.error('Oh look, an alert!')
     if (isUserLoggedIn) {
       history.replace("/");
     }
