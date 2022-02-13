@@ -3,6 +3,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useSelector, useDispatch } from "react-redux";
 import { uiActions } from "../../../store/ui-slice";
 import Toggle from "../theme/ThemeToggle";
+import NavHeaderProfileMenu from "./nav-header-profile-menu/NavHeaderProfileMenu";
 
 const NavHeader = () => {
   const isSidebarExpanded = useSelector((state) => state.ui.isSidebarExpanded);
@@ -22,11 +23,16 @@ const NavHeader = () => {
     >
       <div className="relative w-full h-full flex items-center ">
         <div className="inline-flex items-center justify-between w-full mx-3">
-          <MenuIcon
-            className="cursor-pointer dark:text-gray-50"
-            onClick={menuClickHandler}
-          ></MenuIcon>
-          <Toggle></Toggle>
+          <div className="inline-flex items-center">
+            <MenuIcon
+              className="cursor-pointer dark:text-gray-50"
+              onClick={menuClickHandler}
+            ></MenuIcon>
+          </div>
+          <div className="inline-flex items-center">
+            <Toggle></Toggle>
+            <NavHeaderProfileMenu></NavHeaderProfileMenu>
+          </div>
         </div>
       </div>
     </div>
