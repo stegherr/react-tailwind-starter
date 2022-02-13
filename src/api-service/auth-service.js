@@ -1,9 +1,9 @@
 import apiConfig from "../api-config";
-
+import { useDispatch } from "react-redux";
+import { uiActions } from "../store/ui-slice";
 const axios = require("axios");
 
-const BASE_DOMAIN = "https://asddd.free.beeceptor.com";
-
+const BASE_DOMAIN = "https://asdda.free.beeceptor.com";
 export async function login(payload) {
   try {
     const response = await axios.post(
@@ -11,12 +11,16 @@ export async function login(payload) {
       payload
     );
     console.log(response);
-    return Promise.resolve(response);
+    return Promise.resolve(response.data);
   } catch (error) {
     // console.log(err);
-    if (error.response.status === 403) {
-        // TODO implement auto logout functionality
-    }
-    return Promise.reject(error.response.data);
+    error.response.data.status = error.response.status;
+    throw (
+      error.response.data || {
+        status: 400,
+        message: "Something went wrong please try again.",
+      }
+    );
+    // return Promise.reject(error.response.data);
   }
 }

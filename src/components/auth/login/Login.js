@@ -6,10 +6,14 @@ import { authActions } from "../../../store/auth-slice";
 import { login } from "../../../api-service/auth-service";
 import { useAlert } from "react-alert";
 import { useState, useEffect } from "react";
+import useHttp from "../../../hooks/use-http";
+import { uiActions } from "../../../store/ui-slice";
+
 const Login = () => {
   const disPatch = useDispatch();
   const alert = useAlert();
-
+  const { sendRequest, status, data, apiError } = useHttp(login);
+  const spinnerDispatcher = useDispatch();
   const isUserLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const [errorMessage, setErrorMessage] = useState("");
   useEffect(() => {
@@ -27,17 +31,17 @@ const Login = () => {
   const onSubmit = async (data) => {
     setErrorMessage("");
     console.log(data);
+    // sendRequest(data);
     try {
-      const res = await login(data);
+      const res = await sendRequest(data);
       console.log(res);
+      disPatch(authActions.login());
+      history.replace("/");
     } catch (err) {
       console.error(err);
       alert.error(err.message);
       setErrorMessage(err.message);
     }
-    // disPatch(authActions.login());
-
-    // history.replace("/");
   };
 
   return (
@@ -108,6 +112,7 @@ const Login = () => {
                 Submit
               </Button>
             </div>
+
             <div className="ml-auto mr-auto py-2">
               <p className="text-sm font-semibold">
                 Don't have an account{" "}

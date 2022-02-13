@@ -2,11 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const uiSlice = createSlice({
   name: "ui",
-  initialState: { isSidebarExpanded: true },
+  initialState: { isSidebarExpanded: true, isShowLoading: false },
   reducers: {
     toggleExpand: (state) => {
-        console.log('asd')
       state.isSidebarExpanded = !state.isSidebarExpanded;
+    },
+    setLoading: (state, data) => {
+      state.isShowLoading = data.payload;
     },
   },
 });

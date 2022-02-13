@@ -14,6 +14,7 @@ import Layout from "./components/layout/Layout";
 import { useSelector } from "react-redux";
 import { transitions, positions, Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
+import Spinner from "./components/spinner/Spinner";
 
 function App() {
   const isUserLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -30,6 +31,7 @@ function App() {
   return (
     <Suspense fallback={<h1>Loading...</h1>}>
       <AlertProvider template={AlertTemplate} {...options}>
+        <Spinner></Spinner>
         <Switch>
           <Route path="/login" component={Login}></Route>
           <Route path="/register" component={Register}></Route>
