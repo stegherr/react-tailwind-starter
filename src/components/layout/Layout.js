@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import Content from "../content/Content";
 import NavHeader from "./nav-header/NavHeader";
-import SideMenu from "./sidem-menu/SideMenu";
+import SideMenu from "./side-menu/SideMenu";
 
 const Layout = () => {
   return (

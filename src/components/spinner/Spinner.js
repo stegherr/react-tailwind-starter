@@ -7,7 +7,6 @@ const Spinner = (props) => {
 
   let [color, setColor] = useState("#1E293B");
 
-  console.log(isShowLoading);
   return (
     <Fragment>
       {isShowLoading && (
