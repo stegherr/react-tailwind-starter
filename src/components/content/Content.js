@@ -15,7 +15,7 @@ const Content = (props) => {
         isSidebarExpanded
           ? "left-52 w-[calc(100vw_-_13rem)]"
           : "left-0 w-screen"
-      } h-full duration-500 bg-slate-100`}
+      } h-[calc(100vh_-_3rem)] duration-500 bg-slate-100 dark:bg-slate-700`}
     >
       <h1>Content goes here</h1>
     </div>

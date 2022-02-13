@@ -6,7 +6,7 @@ const SideMenu = () => {
 
   return (
     <div
-      className={` duration-500 min-h-screen w-52 bg-slate-800  ${
+      className={` duration-500 min-h-screen w-52 bg-slate-900  ${
         isSidebarExpanded ? "w-52 " : "w-0"
       }`}
     >

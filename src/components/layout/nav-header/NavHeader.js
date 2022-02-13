@@ -2,6 +2,7 @@ import { Menu } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useSelector, useDispatch } from "react-redux";
 import { uiActions } from "../../../store/ui-slice";
+import Toggle from "../theme/ThemeToggle";
 
 const NavHeader = () => {
   const isSidebarExpanded = useSelector((state) => state.ui.isSidebarExpanded);
@@ -19,8 +20,14 @@ const NavHeader = () => {
           : "left-0 w-screen"
       }`}
     >
-      <div className="relative h-full flex items-center mx-3">
-        <MenuIcon className="cursor-pointer" onClick={menuClickHandler}></MenuIcon>
+      <div className="relative w-full h-full flex items-center ">
+        <div className="inline-flex items-center justify-between w-full mx-3">
+          <MenuIcon
+            className="cursor-pointer"
+            onClick={menuClickHandler}
+          ></MenuIcon>
+          <Toggle></Toggle>
+        </div>
       </div>
     </div>
   );
