@@ -30,16 +30,16 @@ const sideMenu = [
     icon: <PeopleIcon />,
     children: [
       {
-        title: "Add User",
-        type: "basic",
-        icon: <PersonAddIcon />,
-        link:'/users/add'
-      },
-      {
         title: "All Users",
         type: "basic",
         icon: <PeopleIcon />,
-        link:'/users'
+        link: "/users",
+      },
+      {
+        title: "Add User",
+        type: "basic",
+        icon: <PersonAddIcon />,
+        link: "/users/add",
       },
     ],
   },
@@ -47,13 +47,13 @@ const sideMenu = [
     title: "Dashboard",
     type: "basic",
     icon: <HomeIcon />,
-    link:'/dashboard2'
+    link: "/dashboard2",
   },
   {
     title: "Profile",
     type: "basic",
     icon: <PeopleIcon />,
-    link:'/profile2'
+    link: "/profile2",
   },
   {
     title: "",

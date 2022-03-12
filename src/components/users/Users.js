@@ -1,123 +1,103 @@
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
+import { Card, CardHeader, Button, CardContent } from "@mui/material";
 import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
-import React from "react";
-
-const columns = [
-  { id: "name", label: "Name", minWidth: 170 },
-  { id: "code", label: "ISO\u00a0Code", minWidth: 100 },
-  {
-    id: "population",
-    label: "Population",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toLocaleString("en-US"),
-  },
-  {
-    id: "size",
-    label: "Size\u00a0(km\u00b2)",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toLocaleString("en-US"),
-  },
-  {
-    id: "density",
-    label: "Density",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toFixed(2),
-  },
-];
-
-const rows = [
-  createData("India", "IN", 1324171354, 3287263),
-  createData("China", "CN", 1403500365, 9596961),
-  createData("Italy", "IT", 60483973, 301340),
-  createData("United States", "US", 327167434, 9833520),
-  createData("Canada", "CA", 37602103, 9984670),
-  createData("Australia", "AU", 25475400, 7692024),
-  createData("Germany", "DE", 83019200, 357578),
-  createData("Ireland", "IE", 4857000, 70273),
-  createData("Mexico", "MX", 126577691, 1972550),
-  createData("Japan", "JP", 126317000, 377973),
-  createData("France", "FR", 67022000, 640679),
-  createData("United Kingdom", "GB", 67545757, 242495),
-  createData("Russia", "RU", 146793744, 17098246),
-  createData("Nigeria", "NG", 200962417, 923768),
-  createData("Brazil", "BR", 210147125, 8515767),
-];
-
-function createData(name, code, population, size) {
-  const density = population / size;
-  return { name, code, population, size, density };
-}
-
+import React, { useEffect } from "react";
+import { getUsers } from "../users/user-api-services";
+import "./Users.module.css";
 const Users = (props) => {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
+  const [totalRecords, setTotalRecords] = React.useState(10);
+  const [search, setSearch] = React.useState({ size: 10, page: 0, search: "" });
+  const [users, setUsers] = React.useState([]);
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+    setSearch({ ...search, page: newPage });
   };
+  useEffect(async () => {
+    console.log(search);
+    const usersData = await getUsers(search);
+    setUsers(usersData.users);
+  }, [search]);
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
+    setSearch((prev) => {
+      return { ...prev, page: 0, size: +event.target.value };
+    });
   };
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden" }} >
-      <TableContainer  className="rounded-xl h-[calc(100vh-9.25rem)]">
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </Paper>
+    <div className=" bg-white rounded-xl shadow-lg">
+      <div className="flex justify-between px-4 pt-4">
+        <h1 className="text-2xl inline-flex items-center">All users</h1>
+        <button
+          type="button"
+          className="text-white bg-gradient-to-r from-slate-700 via-slate-800 to-slate-900 hover:bg-gradient-to-br focus:ring-4 focus:ring-slate-300 dark:focus:ring-slate-800 font-medium rounded-lg text-sm px-5 py-2 text-center "
+        >
+          Add User
+        </button>
+      </div>
+        <div className="flex flex-col mt-3 mx-4">
+          <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div className="py-4 pt-0 inline-block min-w-full sm:px-6 lg:px-8">
+              <div className="overflow-hidden">
+                <table className="min-w-full text-center ">
+                  <thead className="border-b bg-slate-800">
+                    <tr>
+                      <th
+                        scope="col"
+                        className="text-sm font-medium text-white px-6 py-4 w-1"
+                      >
+                        #
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-sm font-medium text-white px-6 py-4 text-left"
+                      >
+                        Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-sm font-medium text-white px-6 py-4 text-left"
+                      >
+                        Email
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-sm font-medium text-white px-6 py-4 text-left"
+                      >
+                        Last Login
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {users.map((user, index) => (
+                      <tr className="bg-white border-b" key={user.userId}>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 w-1">
+                          {search.page * search.size + index + 1}
+                        </td>
+                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-left">
+                          {user.name}
+                        </td>
+                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-left">
+                          {user.email}
+                        </td>
+                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-left">
+                          {user.lastLogin}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <TablePagination
+                  rowsPerPageOptions={[10, 25, 100]}
+                  component="div"
+                  count={totalRecords}
+                  rowsPerPage={search.size}
+                  page={search.page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
   );
 };
 export default Users;

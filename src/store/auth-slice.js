@@ -5,7 +5,7 @@ const authSlice = createSlice({
   initialState: { isLoggedIn: localStorage.getItem("isLoggedIn") },
   reducers: {
     login: (state, data) => {
-      localStorage.setItem("loggedInUser", data.payload);
+      localStorage.setItem("loggedInUser", JSON.stringify(data.payload));
       localStorage.setItem("isLoggedIn", true);
       state.isLoggedIn = true;
     },

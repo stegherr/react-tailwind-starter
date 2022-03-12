@@ -35,7 +35,7 @@ const Login = () => {
     try {
       const res = await sendRequest(data);
       console.log(res);
-      disPatch(authActions.login());
+      disPatch(authActions.login(res.user));
       history.replace("/");
     } catch (err) {
       console.error(err);
