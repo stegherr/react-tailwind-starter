@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { uiActions } from "../store/ui-slice";
 const axios = require("axios");
 
-const BASE_DOMAIN = "https://asdda.free.beeceptor.com";
+const BASE_DOMAIN = "https://asdd6.free.beeceptor.com";
 export async function login(payload) {
   try {
     const response = await axios.post(
