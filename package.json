@@ -1,7 +1,7 @@
 {
   "name": "react-tailwind-starter",
   "version": "0.1.0",
-  "homepage": "https://dillibk777.github.io/react-tailwind-starter",
+  "homepage": "https://stegherr.github.io/react-tailwind-starter",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.7.1",
